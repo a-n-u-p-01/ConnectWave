@@ -32,7 +32,8 @@ const MeetingRoom = () => {
   const [layout, setLayout] = useState<CallLayoutType>('speaker-left');
   const [showParticipants, setShowParticipants] = useState(false);
   const { useCallCallingState } = useCallStateHooks();
-
+  const [copySuccess, setCopySuccess] = useState(false);
+  const [shareData, setshareData] = useState('Copy meeting link');
   // for more detail about types of CallingState see: https://getstream.io/video/docs/react/ui-cookbook/ringing-call/#incoming-call-panel
   const callingState = useCallCallingState();
 
@@ -49,6 +50,22 @@ const MeetingRoom = () => {
     }
   };
 
+  const copyLink = () =>{
+    console.log("link")
+    const el = document.createElement('input');
+  el.value = window.location.href;
+  document.body.appendChild(el);
+  el.select();
+  document.execCommand('copy');
+  document.body.removeChild(el);
+  setCopySuccess(true);
+  setshareData('Link Copied')
+  setTimeout(() => {
+    setCopySuccess(false);
+    setshareData('Copy meeting link')
+  }, 10000);
+  
+  }
   return (
     <section className="relative h-screen w-full overflow-hidden pt-4 text-white">
       <div className="relative flex size-full items-center justify-center">
@@ -95,6 +112,7 @@ const MeetingRoom = () => {
           </div>
         </button>
         {!isPersonalRoom && <EndCallButton />}
+        <button onClick={()=>copyLink()} className=" cursor-pointer rounded-2xl bg-[#19232d] px-4 py-2 hover:bg-[#4c535b]  ">{shareData}</button>
       </div>
     </section>
   );
