@@ -32,7 +32,7 @@ const MeetingRoom = () => {
   const [layout, setLayout] = useState<CallLayoutType>('speaker-left');
   const [showParticipants, setShowParticipants] = useState(false);
   const { useCallCallingState } = useCallStateHooks();
-  const [copySuccess, setCopySuccess] = useState(false);
+
   const [shareData, setshareData] = useState('Copy meeting link');
   // for more detail about types of CallingState see: https://getstream.io/video/docs/react/ui-cookbook/ringing-call/#incoming-call-panel
   const callingState = useCallCallingState();
@@ -58,10 +58,10 @@ const MeetingRoom = () => {
   el.select();
   document.execCommand('copy');
   document.body.removeChild(el);
-  setCopySuccess(true);
+  
   setshareData('Link Copied')
   setTimeout(() => {
-    setCopySuccess(false);
+   
     setshareData('Copy meeting link')
   }, 10000);
   
